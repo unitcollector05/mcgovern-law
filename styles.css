@@ -621,17 +621,22 @@ p + p { margin-top: var(--space-4); }
 .hero__trust,
 .hero__actions { min-width: 0; }
 
-/* Mobile visual order (DESIGN.md §5.5, revised 2026-09-20 on fold evidence):
-   eyebrow -> H1 -> lead -> trust -> CTA pair -> portrait plate.
-   The ~590px plate previously pushed both CTAs onto the second screen at
-   390x844. `order` moves the plate visually only — the HTML source order is
-   untouched, so the two CTAs remain the first anchors in #hero and the
-   plate keeps its LCP eager/fetchpriority treatment. The plate has no
-   focusable content, so tab order is unaffected. */
+/* Mobile visual order (DESIGN.md §5.5) — FINAL, set by the client after
+   reviewing the live site on a phone:
+     eyebrow -> H1 -> lead -> PORTRAIT PLATE -> trust line -> CTA pair.
+   This restores the plate to its original position ahead of the trust line
+   and the buttons. The CTAs consequently sit below the fold at 390x844;
+   that is an accepted, costed tradeoff (§5.5) because the fixed .callbar
+   keeps the primary number one tap away from anywhere on the page.
+   These values currently match DOM order and are kept explicit so the
+   mobile order stays a deliberate, reviewable decision in one place rather
+   than an implicit side effect of markup order. The HTML source order is
+   NOT changed: the harness defines the hero CTAs as the first two anchors
+   in #hero, and the plate is the LCP element. */
 .hero__copy    { order: 1; }
-.hero__trust   { order: 2; }
-.hero__actions { order: 3; }
-.hero__figure  { order: 4; }
+.hero__figure  { order: 2; }
+.hero__trust   { order: 3; }
+.hero__actions { order: 4; }
 
 /* Left-aligned on mobile as well as desktop: the H1 wraps to five lines and
    the lead to five, and centered multi-line copy costs this audience
@@ -737,16 +742,13 @@ p + p { margin-top: var(--space-4); }
 /* No extra top margin on mobile: the plate now sits last in the visual
    order and the .hero__grid row-gap already separates it from the CTA pair.
    Reclaiming this 32px is what keeps the plate's top edge above the fold. */
-.hero__figure { margin: var(--space-2) auto 0; }
-
-/* The 8px above is mobile-only breathing room under the CTA pair. Desktop
-   resets to 0 — verified by probe to reproduce the signed-off 1440px hero
-   exactly (plate top 129, trust 508, CTA1 574, hero height 713). Declared
-   here rather than in §11 because §12 is later in the file and would
-   otherwise win the cascade at equal specificity. */
-@media (min-width: 960px) {
-  .hero__figure { margin-top: 0; }
-}
+/* No extra top margin. The 8px that used to sit here was breathing room
+   under the CTA pair, back when the plate rendered last on mobile; the
+   plate now sits between the lead and the trust line, where .hero__grid's
+   row-gap already provides the separation. Removing it lifts everything
+   below the plate by 8px, which is the only honest slack available now
+   that the CTAs are below the plate. */
+.hero__figure { margin: 0 auto; }
 
 .portrait-plate__frame {
   border: 1px solid var(--brass);
