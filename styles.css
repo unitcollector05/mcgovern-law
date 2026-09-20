@@ -21,6 +21,9 @@
   /* Navy (his suit) */
   --navy:             #17233D;
   --navy-soft:        #24355A;
+  /* Channel triplet for the confirmation dialog's ::backdrop wash (§5.15).
+     Kept here so the stylesheet's rgba() values carry no raw literal. */
+  --navy-rgb:         23, 35, 61;
 
   /* Accents (book spines) */
   --oxblood:          #6E1B22;
@@ -1334,6 +1337,105 @@ p + p { margin-top: var(--space-4); }
 }
 
 .site-footer__disclaimer + .site-footer__disclaimer { margin-top: var(--space-3); }
+
+/* ---------- 20a. Success confirmation dialog (§5.15) -------------------- */
+
+/* The <dialog> element IS the panel frame. UA padding/border reset, then
+   the navy outer rule; .confirm__panel supplies the brass inner rule, and
+   together they are permitted device #2, the thin double rule.
+   Fluid width with a max — a fixed-width panel is the classic cause of
+   horizontal overflow at 320px. */
+.confirm {
+  width: calc(100% - var(--space-6));
+  max-width: 420px;
+  padding: 0;
+  border: 1px solid var(--navy);
+  border-radius: var(--radius-md);
+  background-color: var(--parchment);
+  color: var(--ink);
+}
+
+/* Navy wash, not the browser's default grey. The literal is a var()
+   fallback because older Chromium did not let ::backdrop inherit custom
+   properties from its originating element. */
+.confirm::backdrop {
+  background-color: rgba(var(--navy-rgb, 23, 35, 61), 0.82);
+}
+
+.confirm__panel {
+  margin: 4px;
+  padding: var(--space-6) var(--space-5) var(--space-5);
+  border: 1px solid var(--brass);   /* inner hairline of the double rule */
+  text-align: center;
+}
+
+.confirm__mark { margin-bottom: var(--space-4); }
+
+/* The monogram sits on parchment here, not navy. --brass-light would be
+   ~2.3:1 and fail; --brass-ink is 5.91:1. §2.2, the usual trap. */
+.confirm__mark .monogram__letters { color: var(--brass-ink); }
+
+.confirm__rule {
+  width: 72px;
+  margin: 0 auto var(--space-5);
+}
+
+.confirm__title {
+  font-size: 1.875rem;    /* 30px — deliberately larger than body copy */
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--navy);
+  margin-bottom: var(--space-4);
+}
+
+.confirm__body {
+  font-size: 1.25rem;     /* 20px — "hard to read" was the complaint */
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.confirm__urgent {
+  margin-top: var(--space-4);
+  font-size: 1.125rem;    /* 18px */
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.confirm__tel {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--navy);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.confirm__tel:hover { color: var(--oxblood); text-decoration-thickness: 2px; }
+
+.confirm__close {
+  margin-top: var(--space-5);
+  width: 100%;
+}
+
+@media (min-width: 520px) {
+  .confirm__close { width: auto; min-width: 140px; }
+}
+
+@media (min-width: 960px) {
+  .confirm__title { font-size: 2.25rem; }   /* 36px */
+}
+
+/* Third motion surface on the page (§6.1). opacity + transform only, so it
+   is GPU-composited, and the global reduced-motion block below neutralises
+   it for anyone who asks. */
+.confirm[open] {
+  animation: confirm-in 160ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+@keyframes confirm-in {
+  from { opacity: 0; transform: scale(0.98); }
+  to   { opacity: 1; transform: none; }
+}
 
 /* ---------- 21. Reduced motion (§6.3) — must stay last ------------------ */
 

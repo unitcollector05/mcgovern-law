@@ -58,7 +58,7 @@
      cache-control: max-age=600, and a returning visitor who gets new HTML
      with cached old CSS/JS is worse off than one who gets neither.
      BUMP THIS INTEGER whenever styles.css or script.js changes. -->
-<link rel="stylesheet" href="styles.css?v=2">
+<link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body class="page" id="top">
 
@@ -567,7 +567,26 @@
   </a>
 </div>
 
-<script src="script.js?v=2" defer></script>
+<!-- Success confirmation. Native <dialog> + showModal(): focus trapping,
+     Escape-to-close, an inert background and top-layer stacking all come
+     for free and all work over file://. No explicit role attribute â€” the
+     element already has an implicit dialog role, and role="button" /
+     role="region" are banned page-wide (R6-faq-native-only).
+     Opened ONLY on a successful submit. Failures stay inline. -->
+<dialog class="confirm" id="confirm-dialog" aria-labelledby="confirm-title">
+  <div class="confirm__panel">
+    <span class="monogram confirm__mark" aria-hidden="true"><span class="monogram__letters">TM</span></span>
+    <hr class="rule rule--double confirm__rule" aria-hidden="true">
+    <h2 class="confirm__title" id="confirm-title">Thank you</h2>
+    <p class="confirm__body">Your message is with me now. I will get back to you shortly.</p>
+    <p class="confirm__urgent">If it is urgent, call me at
+      <a class="confirm__tel" href="tel:+15167272531"><span class="no-wrap">(516) 727-2531</span></a>
+    </p>
+    <button class="btn btn--primary confirm__close" type="button" id="confirm-close">Close</button>
+  </div>
+</dialog>
+
+<script src="script.js?v=3" defer></script>
 </body>
 </html>
 

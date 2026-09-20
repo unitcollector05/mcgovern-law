@@ -36,12 +36,83 @@
 
   var statusEl = document.getElementById('form-status');
   var submitBtn = document.getElementById('form-submit');
+  var dialog = document.getElementById('confirm-dialog');
+  var dialogClose = document.getElementById('confirm-close');
   var submitLabel = submitBtn ? submitBtn.querySelector('.btn__label') : null;
   var idleLabel = submitLabel ? submitLabel.textContent : '';
 
   function valueOf(id) {
     var field = document.getElementById(id);
     return field && typeof field.value === 'string' ? field.value.trim() : '';
+  }
+
+  /* ---- Confirmation dialog --------------------------------------------- */
+
+  /* Native <dialog>.showModal() gives focus trapping, Escape-to-close, an
+     inert background and top-layer stacking for free. If the browser is too
+     old to support it, we degrade to the inline status message, which
+     onSuccess() sets regardless -- so the visitor is never left without a
+     confirmation. */
+  function openConfirm() {
+    if (!dialog || typeof dialog.showModal !== 'function') {
+      return false;
+    }
+    try {
+      dialog.showModal();
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  /* <dialog> normally restores focus to whatever was focused before it opened,
+     but form.reset() runs first and breaks that chain -- focus ends up on
+     <body>, which dumps a keyboard or screen-reader user at the top of the
+     page with their place lost. Put it back on the submit button explicitly. */
+  if (dialog) {
+    dialog.addEventListener('close', function () {
+      var target = submitBtn || form;
+      if (target && typeof target.focus === 'function' &&
+          document.body.contains(target)) {
+        target.focus();
+      }
+    });
+  }
+
+  function closeConfirm() {
+    if (dialog && dialog.open) {
+      dialog.close();
+    }
+  }
+
+  if (dialogClose) {
+    dialogClose.addEventListener('click', closeConfirm);
+  }
+
+  /* Backdrop click closes. The ::backdrop is a pseudo-element, so clicks on it
+     report the <dialog> itself as event.target -- and depending on how the
+     dialog box is sized, clicks on its own padding do too. Anything inside the
+     panel reports a descendant instead. So: bail if the target is not the
+     dialog, then bounds-check against the PANEL rect. Testing the dialog's own
+     rect is the classic bug -- it can span the viewport, which would swallow
+     every click and close on inner clicks too. */
+  if (dialog) {
+    dialog.addEventListener('click', function (event) {
+      if (event.target !== dialog) {
+        return;
+      }
+      var panel = dialog.querySelector('.confirm__panel');
+      if (!panel) {
+        closeConfirm();
+        return;
+      }
+      var box = panel.getBoundingClientRect();
+      var inside = event.clientX >= box.left && event.clientX <= box.right &&
+                   event.clientY >= box.top && event.clientY <= box.bottom;
+      if (!inside) {
+        closeConfirm();
+      }
+    });
   }
 
   /* The mailto: this page used before it had a backend. Still the fallback
@@ -104,9 +175,13 @@
   function onSuccess() {
     form.reset();
     setBusy(false);
+    /* The inline status is set FIRST and unconditionally: it is the fallback
+       for browsers without <dialog> support, and it keeps the aria-live
+       announcement working for screen readers regardless of the modal. */
     setStatus(null,
       'Thank you \u2014 your message is with me now. I will get back to you ' +
       'shortly. If it is urgent, call me at ' + PHONE + '.');
+    openConfirm();
   }
 
   function onFailure(detail) {
