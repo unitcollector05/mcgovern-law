@@ -1,0 +1,1291 @@
+/* ==========================================================================
+   Thomas M. McGovern, Attorney-at-Law
+   Implemented strictly against DESIGN.md — tokens (§2), type (§3),
+   scale (§4), components (§5), motion (§6), a11y (§7).
+   Light parchment field, dark text. Mobile-first at 390px.
+   ========================================================================== */
+
+/* ---------- 1. Tokens (DESIGN.md §2.1) ---------------------------------- */
+
+:root {
+  /* Field / surfaces */
+  --parchment:        #FAF6EF;
+  --parchment-deep:   #F3ECE0;
+  --mat:              #FFFFFF;
+
+  /* Text */
+  --ink:              #1C1A17;
+  --ink-muted:        #56514A;
+  --parchment-muted:  #C9BFAE;
+
+  /* Navy (his suit) */
+  --navy:             #17233D;
+  --navy-soft:        #24355A;
+
+  /* Accents (book spines) */
+  --oxblood:          #6E1B22;
+  --forest:           #1F4436;
+
+  /* Brass (gold banding) */
+  --brass:            #A8822C;   /* NON-TEXT ONLY */
+  --brass-ink:        #7A5A15;   /* small text on light */
+  --brass-light:      #D4AF6A;   /* small text on navy / walnut */
+
+  /* Walnut (the shelving) */
+  --walnut:           #3A2A1E;
+
+  /* Lines */
+  --border-decorative: #D8CDB9;
+  --border-strong:     #8A8071;
+
+  /* Focus ring (two-tone) */
+  --focus-ring-outer:  #17233D;
+  --focus-ring-inner:  #FAF6EF;
+
+  /* Type stacks (§3.2) */
+  --font-display: "Libre Caslon Text", Georgia, "Iowan Old Style", "Palatino Linotype",
+                  "Times New Roman", Times, serif;
+  --font-body:    Georgia, "Iowan Old Style", "Palatino Linotype",
+                  "Times New Roman", Times, serif;
+
+  /* Spacing (§4.1) */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  /* Widths (§4.2) */
+  --maxw-page:  1100px;
+  --maxw-prose:   44rem;
+  --maxw-plate:  420px;
+  --gutter:       20px;
+  --gutter-lg:    32px;
+  --header-h:     60px;
+  --header-h-lg:  68px;
+  --callbar-h:    64px;
+
+  /* Radii (§4.4) */
+  --radius-sm: 2px;
+  --radius-md: 3px;
+
+  /* Motion (§6.1) */
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* ---------- 2. Reset / base --------------------------------------------- */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--parchment);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote {
+  margin: 0;
+}
+
+ul, ol { padding: 0; }
+
+img, svg { max-width: 100%; }
+
+a { color: var(--navy); }
+
+hr { border: 0; margin: 0; }
+
+:target,
+[id] { scroll-margin-top: calc(var(--header-h) + var(--space-4)); }
+
+/* ---------- 3. Typography (§3.3) ---------------------------------------- */
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--navy);
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+p { text-wrap: pretty; }
+
+h1, .hero__title {
+  font-size: 2.125rem;   /* 34px */
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+
+h2 {
+  font-size: 1.875rem;   /* 30px */
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: 1.5rem;     /* 24px */
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+}
+
+h4 {
+  font-size: 1.25rem;    /* 20px */
+  line-height: 1.3;
+}
+
+p + p { margin-top: var(--space-4); }
+
+@media (min-width: 960px) {
+  h1, .hero__title { font-size: 3rem; }    /* 48px */
+  h2 { font-size: 2.25rem; }               /* 36px */
+}
+
+/* ---------- 4. Shell and utilities (§5.1) ------------------------------- */
+
+.page { padding-bottom: var(--callbar-h); }
+
+@media (min-width: 768px) {
+  .page { padding-bottom: 0; }
+}
+
+.container {
+  width: 100%;
+  max-width: var(--maxw-page);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@media (min-width: 768px) {
+  .container { padding-inline: var(--gutter-lg); }
+}
+
+.container--prose {
+  max-width: var(--maxw-prose);
+  margin-inline: auto;
+  padding-inline: 0;
+}
+
+.section { padding-block: var(--space-8); }
+
+@media (min-width: 960px) {
+  .section { padding-block: var(--space-9); }
+}
+
+.section--tint { background-color: var(--parchment-deep); }
+
+.section__head {
+  margin-bottom: var(--space-6);
+}
+
+.section__head::after {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 0;
+  border-top: 1px solid var(--brass);
+  margin: var(--space-5) auto 0;
+}
+
+.section__head .eyebrow { margin-bottom: var(--space-3); }
+
+.section__lead {
+  font-size: 1.25rem;    /* 20px */
+  line-height: 1.55;
+  color: var(--ink);
+  max-width: 60ch;
+  margin: var(--space-4) auto 0;
+}
+
+@media (min-width: 960px) {
+  .section__lead { font-size: 1.375rem; }  /* 22px */
+}
+
+.stack > * + * { margin-top: var(--space-4); }
+.stack--tight > * + * { margin-top: var(--space-2); }
+.stack--loose > * + * { margin-top: var(--space-6); }
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;   /* 13px */
+  font-weight: 700;
+  line-height: 1.3;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  padding-right: 0.16em;
+  color: var(--brass-ink);
+  margin: 0;
+}
+
+.eyebrow--on-dark { color: var(--brass-light); }
+
+.rule {
+  border: 0;
+  border-top: 1px solid var(--border-decorative);
+  height: 0;
+}
+
+.rule--double {
+  height: 3px;
+  border-top: 1px solid var(--brass);
+  border-bottom: 1px solid var(--border-decorative);
+  margin-bottom: var(--space-8);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.no-wrap { white-space: nowrap; }
+
+.text-center { text-align: center; }
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;   /* 17px */
+  font-weight: 700;
+  background-color: var(--navy);
+  color: var(--parchment);
+  text-decoration: none;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+}
+
+.skip-link:focus {
+  left: var(--space-3);
+  top: var(--space-3);
+}
+
+/* ---------- 5. Focus ring (§2.4) ---------------------------------------- */
+
+:where(a, button, summary, input, select, textarea):focus-visible {
+  outline: 3px solid var(--focus-ring-outer);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--focus-ring-inner);
+  border-radius: var(--radius-sm);
+}
+
+/* ---------- 6. Icons (§5.7) --------------------------------------------- */
+
+.icon {
+  width: 1em;
+  height: 1em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+/* ---------- 7. Buttons (§5.7) ------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 48px;
+  /* Narrow-width padding step (§4.3 "xs"). At 320px a button was paying 48px
+     of horizontal padding out of a 280px container. Restored at 380px. */
+  padding: var(--space-3);
+  /* Flex/grid children default to min-width:auto and refuse to shrink below
+     their content — the classic grid blowout. */
+  min-width: 0;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;   /* 17px */
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color 120ms var(--ease),
+              border-color 120ms var(--ease),
+              color 120ms var(--ease);
+}
+
+@media (min-width: 380px) {
+  .btn { padding: var(--space-3) var(--space-5); }
+}
+
+.btn--primary {
+  position: relative;
+  background-color: var(--navy);
+  color: var(--parchment);
+  border: 1px solid var(--navy);
+}
+
+.btn--primary::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  bottom: 2px;
+  left: 2px;
+  border: 1px solid var(--brass);
+  border-radius: var(--radius-sm);
+  pointer-events: none;
+}
+
+.btn--primary:hover { background-color: var(--navy-soft); }
+.btn--primary:active { background-color: var(--navy); transform: translateY(1px); }
+
+.btn--secondary {
+  background-color: transparent;
+  color: var(--navy);
+  border: 1.5px solid var(--navy);
+}
+
+.btn--secondary:hover {
+  background-color: var(--parchment-deep);
+  box-shadow: inset 0 0 0 1px var(--navy);
+}
+
+.btn--secondary:active { transform: translateY(1px); }
+
+.btn--header {
+  min-height: 44px;   /* tap floor; was 40px */
+  padding: var(--space-2) var(--space-4);
+  font-size: 0.9375rem;   /* 15px */
+  background-color: transparent;
+  color: var(--parchment);
+  border: 1px solid var(--brass);
+}
+
+.btn--header:hover { background-color: var(--navy-soft); }
+
+.btn--block { width: 100%; }
+
+@media (min-width: 520px) {
+  .btn--block { width: auto; }
+}
+
+/* ---------- 8. Monogram (§5.3) ------------------------------------------ */
+
+.monogram {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border: 1px solid var(--brass);
+  border-radius: var(--radius-sm);
+}
+
+.monogram::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  bottom: 3px;
+  left: 3px;
+  border: 1px solid var(--brass);
+}
+
+.monogram__letters {
+  font-family: var(--font-display);
+  font-size: 1.1875rem;   /* 19px */
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  padding-left: 0.06em;
+  color: var(--brass-light);
+}
+
+.monogram--lg {
+  width: 64px;
+  height: 64px;
+}
+
+.monogram--lg .monogram__letters { font-size: 1.625rem; }  /* 26px */
+
+@media (min-width: 768px) {
+  .monogram { width: 44px; height: 44px; }
+}
+
+/* ---------- 9. Sticky header (§5.2) ------------------------------------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--navy);
+  border-bottom: 1px solid var(--brass);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: var(--header-h);
+  padding-block: var(--space-2);
+}
+
+@media (min-width: 768px) {
+  .site-header__inner { min-height: var(--header-h-lg); }
+}
+
+.site-header__mark {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;   /* tap floor — the 40px monogram alone was short */
+  min-width: 0;
+  text-decoration: none;
+}
+
+.site-header__wordmark {
+  display: flex;
+  flex-direction: column;
+}
+
+.site-header__name {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;   /* 17px */
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--parchment);
+}
+
+.site-header__cred {
+  font-family: var(--font-body);
+  font-size: 0.75rem;     /* 12px */
+  font-weight: 700;
+  line-height: 1.3;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding-right: 0.12em;
+  color: var(--brass-light);
+}
+
+.site-header__nav {
+  display: none;
+}
+
+.site-header__nav-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-1);
+  font-size: 1rem;        /* 16px */
+  color: var(--parchment);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 120ms var(--ease), border-color 120ms var(--ease);
+}
+
+.site-header__nav-link:hover {
+  color: var(--brass-light);
+  border-bottom-color: var(--brass);
+}
+
+.site-header__cta { display: none; }
+
+@media (min-width: 768px) {
+  .site-header__cta { display: inline-flex; }
+}
+
+@media (min-width: 960px) {
+  .site-header__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+  }
+}
+
+/* ---------- 10. Mobile tap-to-call bar (§5.4) --------------------------- */
+
+.callbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  min-height: var(--callbar-h);
+  padding-bottom: env(safe-area-inset-bottom);
+  background-color: var(--navy);
+  border-top: 1px solid var(--brass);
+}
+
+.callbar__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-height: var(--callbar-h);
+  text-decoration: none;
+  color: var(--parchment);
+  font-size: 1.25rem;
+  transition: background-color 120ms var(--ease);
+}
+
+.callbar__link:active { background-color: var(--navy-soft); }
+
+.callbar__label {
+  font-family: var(--font-body);
+  font-size: 0.75rem;     /* 12px */
+  font-weight: 700;
+  line-height: 1.3;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  padding-right: 0.14em;
+  color: var(--brass-light);
+}
+
+.callbar__number {
+  font-family: var(--font-display);
+  font-size: 1.25rem;     /* 20px */
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--parchment);
+}
+
+@media (min-width: 768px) {
+  .callbar { display: none; }
+}
+
+/* Short landscape phones (< 768px wide, so the bar is still on): header 61px
+   + call bar 65px = 126px of chrome out of a 375px viewport — 34%, and the
+   bar was cutting the hero lead mid-sentence.
+   The bar is SHRUNK, not hidden. Hiding it was considered and rejected:
+   .site-header__cta is display:none below 768px, so removing the bar would
+   leave no persistent call affordance at all on exactly the devices that
+   most need one. 48px still clears the 44px tap floor and gives back 17px.
+   Redefining the token here cascades to .callbar, .callbar__link and the
+   .page bottom padding at once. */
+@media (orientation: landscape) and (max-height: 430px) {
+  :root { --callbar-h: 48px; }
+  .callbar__number { font-size: 1.125rem; }   /* 18px */
+}
+
+/* ---------- 11. Hero (§5.5) --------------------------------------------- */
+
+/* Light parchment field, same as the page (DESIGN.md §1.2). The navy
+   photographic hero tried on 2026-09-20 was rejected: sitting directly under
+   the navy sticky header it read as one undifferentiated blue slab, and the
+   brass hairline between them was not enough separation. See DESIGN.md
+   §5.5a-VOID before proposing anything like it again.
+   background-color is declared rather than inherited so the value the
+   contrast harness reads when it walks ancestors is explicit. */
+.hero { background-color: var(--parchment); }
+
+/* Balanced padding — retained from the layout fix. It was a lopsided 32/64
+   mobile and 48/96 desktop, which read as dead space under the CTAs. */
+.hero { padding-block: var(--space-6) var(--space-7); }
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: var(--space-4);
+}
+
+/* Grid and flex children default to min-width:auto, which refuses to shrink
+   below their content and pushes the whole track wider than the viewport.
+   Every hero child gets min-width:0 so narrow screens can reflow. */
+.hero__copy,
+.hero__figure,
+.hero__trust,
+.hero__actions { min-width: 0; }
+
+/* Mobile visual order (DESIGN.md §5.5, revised 2026-09-20 on fold evidence):
+   eyebrow -> H1 -> lead -> trust -> CTA pair -> portrait plate.
+   The ~590px plate previously pushed both CTAs onto the second screen at
+   390x844. `order` moves the plate visually only — the HTML source order is
+   untouched, so the two CTAs remain the first anchors in #hero and the
+   plate keeps its LCP eager/fetchpriority treatment. The plate has no
+   focusable content, so tab order is unaffected. */
+.hero__copy    { order: 1; }
+.hero__trust   { order: 2; }
+.hero__actions { order: 3; }
+.hero__figure  { order: 4; }
+
+/* Left-aligned on mobile as well as desktop: the H1 wraps to five lines and
+   the lead to five, and centered multi-line copy costs this audience
+   (frequently elderly) a flush left edge to return to on every line. */
+.hero__copy { text-align: left; }
+
+/* Hero text is dark-on-light, like the rest of the page. The eyebrow and
+   trust line inherit --brass-ink from .eyebrow / are set to --ink-muted
+   below. DO NOT reach for --brass-light here: it is the on-navy variant and
+   measures ~2.3:1 on parchment. DO NOT reach for --brass either — it is
+   non-text only, 3.31:1 (DESIGN.md §2.2, the highest-risk error on this
+   palette). */
+.hero__eyebrow { margin-bottom: var(--space-3); }  /* --brass-ink, 5.91:1 */
+
+.hero__lead {
+  font-size: 1.25rem;     /* 20px */
+  line-height: 1.55;
+  color: var(--ink);      /* 16.12:1 on parchment */
+  max-width: 52ch;
+  margin: var(--space-4) 0 0;
+}
+
+.hero__trust {
+  position: relative;
+  font-size: 1.0625rem;   /* 17px */
+  line-height: 1.55;
+  color: var(--ink-muted); /* 7.30:1 on parchment */
+  text-align: left;
+  padding-top: var(--space-4);
+}
+
+.hero__trust::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  border-top: 1px solid var(--brass);   /* non-text hairline */
+}
+
+/* No .hero-scoped button overrides. Both CTAs use the standard §5.7 tokens
+   again — .btn--primary navy fill / cream label, .btn--secondary navy
+   outline / navy label — which is also what the contact form's submit
+   button uses. One definition, no scoping to keep in sync. */
+
+.hero__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+@media (min-width: 520px) {
+  .hero__actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+}
+
+@media (min-width: 960px) {
+  /* Even padding replaces the old 48/96, which read as dead space under the
+     CTAs. The client explicitly did not want a 100vh hero, so the band stays
+     close to its previous height. */
+  .hero       { padding-block: var(--space-8); }
+  .hero__lead { margin-top: var(--space-5); }
+
+  .hero__grid {
+    grid-template-columns: 7fr 5fr;
+    grid-template-areas:
+      "copy    figure"
+      "trust   figure"
+      "actions figure";
+    column-gap: var(--space-8);
+    row-gap: var(--space-5);
+    /* Centred, not start-aligned: the copy column is shorter than the plate,
+       so top-aligning left the two columns visually unbalanced. */
+    align-items: center;
+  }
+  /* Explicit placement supersedes `order`; reset it so the two-column
+     desktop hero is driven entirely by grid-template-areas. */
+  .hero__copy    { grid-area: copy;    order: 0; }
+  .hero__trust   { grid-area: trust;   order: 0; }
+  .hero__actions { grid-area: actions; order: 0; align-items: center; }
+  /* Vertical margin for .hero__figure lives with the plate in §12 so the
+     cascade has a single owner — section 12 is later in the file and would
+     otherwise silently win here. */
+  .hero__figure  { grid-area: figure;  order: 0;
+                   align-self: center; justify-self: end; }
+}
+
+/* ---------- 12. Portrait plate (§5.6) ----------------------------------- */
+
+.portrait-plate {
+  max-width: 420px;
+  margin: 0 auto;
+  background-color: var(--mat);
+  border: 1px solid var(--navy);
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 1px 2px rgba(28, 26, 23, 0.10);
+}
+
+/* No extra top margin on mobile: the plate now sits last in the visual
+   order and the .hero__grid row-gap already separates it from the CTA pair.
+   Reclaiming this 32px is what keeps the plate's top edge above the fold. */
+.hero__figure { margin: var(--space-2) auto 0; }
+
+/* The 8px above is mobile-only breathing room under the CTA pair. Desktop
+   resets to 0 — verified by probe to reproduce the signed-off 1440px hero
+   exactly (plate top 129, trust 508, CTA1 574, hero height 713). Declared
+   here rather than in §11 because §12 is later in the file and would
+   otherwise win the cascade at equal specificity. */
+@media (min-width: 960px) {
+  .hero__figure { margin-top: 0; }
+}
+
+.portrait-plate__frame {
+  border: 1px solid var(--brass);
+  padding: 14px;
+  background-color: var(--mat);
+}
+
+/* <picture> is inline by default; the block img inside would otherwise
+   generate an anonymous block and a stray line box under the photo. */
+.portrait-plate__frame picture { display: block; }
+
+.portrait-plate__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 456 / 576;
+}
+
+.portrait-plate__caption {
+  border-top: 1px solid var(--border-decorative);
+  margin-top: 14px;
+  padding: 12px 0 2px;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;   /* 13px */
+  font-weight: 700;
+  line-height: 1.3;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  padding-right: 0.14em;
+  color: var(--brass-ink);
+  text-align: center;
+}
+
+/* ---------- 13. Practice areas (§5.8) ----------------------------------- */
+
+.practice__list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+@media (min-width: 768px) {
+  .practice__list {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+  }
+}
+
+.practice-card {
+  background-color: var(--mat);
+  border: 1px solid var(--border-decorative);
+  border-top: 3px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: var(--space-6) var(--space-5);
+}
+
+.practice-card--estate { border-top-color: var(--oxblood); }
+.practice-card--realestate { border-top-color: var(--forest); }
+
+.practice-card__eyebrow { margin-bottom: var(--space-2); }
+
+.practice-card__title { margin-bottom: var(--space-4); }
+
+.practice-card__body p { color: var(--ink); }
+
+.practice-card__items {
+  list-style: none;
+  padding: 0;
+  margin-top: var(--space-5);
+}
+
+.practice-card__item {
+  font-size: 1.0625rem;   /* 17px */
+  line-height: 1.65;
+  color: var(--ink);
+}
+
+.practice-card__item::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  border-top: 1px solid var(--brass);
+  vertical-align: 0.35em;
+  margin-right: var(--space-3);
+}
+
+/* margin trimmed from --space-5 to --space-3 because the link below now
+   carries 44px of tap height; the optical gap is unchanged. */
+.practice-card__foot {
+  margin-top: var(--space-3);
+  font-size: 1.0625rem;
+}
+
+/* Standalone call-to-action on its own line, not an inline prose link — it
+   gets the full 44px tap floor. The padding is invisible; the link still
+   looks like a text link. */
+.practice-card__foot a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--navy);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.practice-card__foot a:hover {
+  color: var(--oxblood);
+  text-decoration-thickness: 2px;
+}
+
+/* ---------- 14. Story --------------------------------------------------- */
+
+/* Single measured prose column since the duplicate portrait was removed.
+   Capped at --maxw-prose (~68ch) so the line length never runs to the full
+   1100px container. */
+.story__body { max-width: var(--maxw-prose); }
+
+/* The closing paragraph is the payoff of the narrative. It carries the same
+   brass left-hairline device as .diff__item, which gives the section a
+   visual anchor without adding ornament or a second photograph. */
+.story__coda {
+  padding-left: var(--space-5);
+  border-left: 1px solid var(--brass);
+}
+
+/* ---------- 15. Differentiators (§5.9) ---------------------------------- */
+
+.diff__list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+.diff__item {
+  padding-left: var(--space-5);
+  border-left: 1px solid var(--brass);
+}
+
+.diff__term {
+  font-family: var(--font-display);
+  font-size: 1.1875rem;   /* 19px */
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--navy);
+}
+
+.diff__desc {
+  margin: var(--space-2) 0 0;
+  font-size: 1.125rem;
+  color: var(--ink);
+}
+
+/* ---------- 16. Process (§5.10) ----------------------------------------- */
+
+.process__list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+.process-step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.process-step__num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: 1px solid var(--brass);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-size: 1.25rem;     /* 20px */
+  font-weight: 700;
+  line-height: 1;
+  color: var(--brass-ink);
+}
+
+.process-step__title {
+  font-size: 1.25rem;     /* 20px */
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.process-step__body {
+  font-size: 1.0625rem;   /* 17px */
+  color: var(--ink);
+}
+
+@media (min-width: 960px) {
+  .process__list { grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+  .process-step { flex-direction: column; gap: var(--space-4); }
+}
+
+/* ---------- 17. FAQ (§5.11) --------------------------------------------- */
+
+.faq__list { display: block; }
+
+.faq-item {
+  border-top: 1px solid var(--border-decorative);
+}
+
+.faq-item:last-child {
+  border-bottom: 1px solid var(--border-decorative);
+}
+
+.faq-item[open] {
+  background-color: var(--parchment-deep);
+  box-shadow: inset 2px 0 0 var(--brass);
+}
+
+.faq-item__q {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 56px;
+  padding: var(--space-4) var(--space-4) var(--space-4) var(--space-5);
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-display);
+  font-size: 1.125rem;    /* 18px */
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--navy);
+  transition: background-color 120ms var(--ease);
+}
+
+.faq-item__q::-webkit-details-marker { display: none; }
+.faq-item__q::marker { content: ""; }
+
+.faq-item__q:hover { background-color: var(--parchment-deep); }
+
+.faq-item__indicator {
+  position: relative;
+  display: block;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.faq-item__indicator::before,
+.faq-item__indicator::after {
+  content: "";
+  position: absolute;
+  background-color: var(--brass-ink);
+  transition: transform 180ms var(--ease);
+}
+
+.faq-item__indicator::before {
+  top: 6px;
+  left: 0;
+  width: 14px;
+  height: 1px;
+}
+
+.faq-item__indicator::after {
+  left: 6px;
+  top: 0;
+  width: 1px;
+  height: 14px;
+}
+
+.faq-item[open] .faq-item__indicator::after { transform: scaleY(0); }
+
+.faq-item__a {
+  padding: 0 var(--space-5) var(--space-5);
+  max-width: 62ch;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  color: var(--ink);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 180ms var(--ease), transform 180ms var(--ease);
+}
+
+.faq-item[open] .faq-item__a {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- 18. Contact (§5.12) ----------------------------------------- */
+
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-7);
+}
+
+@media (min-width: 768px) {
+  .contact__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+    align-items: start;
+  }
+}
+
+.contact__phone {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 48px;
+  font-family: var(--font-display);
+  font-size: 1.75rem;     /* 28px */
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--navy);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.contact__phone:hover { color: var(--oxblood); text-decoration-thickness: 2px; }
+
+.contact__phone--alt { font-size: 1.375rem; }   /* 22px */
+
+@media (min-width: 960px) {
+  .contact__phone { font-size: 2rem; }          /* 32px */
+  .contact__phone--alt { font-size: 1.5rem; }   /* 24px */
+}
+
+.contact__email {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 48px;
+  font-size: 1.125rem;    /* 18px */
+  color: var(--navy);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  word-break: break-word;
+}
+
+.contact__email:hover { color: var(--oxblood); text-decoration-thickness: 2px; }
+
+.contact__hours {
+  font-size: 1.0625rem;   /* 17px */
+  color: var(--ink-muted);
+}
+
+.contact__hours a {
+  color: var(--navy);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.contact__hours a:hover { color: var(--oxblood); text-decoration-thickness: 2px; }
+
+.contact__areas {
+  font-size: 1.0625rem;   /* 17px */
+  color: var(--ink);
+}
+
+.contact__form-note {
+  font-size: 0.9375rem;   /* 15px */
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+/* ---------- 19. Form (§5.13) -------------------------------------------- */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin-top: var(--space-5);
+}
+
+.form__row { display: block; }
+
+.form__label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 1rem;        /* 16px */
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--ink);
+  margin-bottom: var(--space-2);
+}
+
+.form__label span {
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+
+.form__input,
+.form__textarea {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;   /* 17px */
+  line-height: 1.5;
+  background-color: var(--mat);
+  color: var(--ink);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  transition: border-color 120ms var(--ease);
+}
+
+.form__textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.form__input:hover,
+.form__textarea:hover { border-color: var(--navy); }
+
+.form__input:focus-visible,
+.form__textarea:focus-visible { border-color: var(--navy); }
+
+.form__input:user-invalid,
+.form__textarea:user-invalid { border-width: 2px; border-color: var(--oxblood); }
+
+.form__help {
+  font-size: 0.9375rem;   /* 15px */
+  line-height: 1.6;
+  color: var(--ink-muted);
+  margin-top: var(--space-2);
+}
+
+.form__actions { display: block; }
+
+.form__consent {
+  font-size: 0.9375rem;   /* 15px */
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+/* ---------- 20. Footer (§5.14) ------------------------------------------ */
+
+.site-footer {
+  background-color: var(--walnut);
+  border-top: 1px solid var(--brass);
+  padding-block: var(--space-8);
+  color: var(--parchment);
+}
+
+.site-footer__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .site-footer__inner {
+    grid-template-columns: auto 1fr;
+    gap: var(--space-8);
+    align-items: start;
+  }
+}
+
+.site-footer__mark {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.site-footer__name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.25rem;     /* 20px */
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--parchment);
+  margin-bottom: var(--space-2);
+}
+
+.site-footer__body > * + * { margin-top: var(--space-5); }
+
+.site-footer__nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+@media (min-width: 768px) {
+  .site-footer__nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+  }
+}
+
+.site-footer__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;
+  font-size: 1.0625rem;   /* 17px */
+  color: var(--parchment);
+  text-decoration: none;
+  transition: color 120ms var(--ease);
+}
+
+.site-footer__link:hover {
+  color: var(--parchment);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.site-footer__link--tel { min-height: 48px; }
+
+.site-footer__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.site-footer__meta p {
+  font-size: 1.0625rem;   /* 17px */
+  color: var(--parchment);
+}
+
+.site-footer__disclaimer,
+.site-footer__copyright {
+  font-size: 0.9375rem;   /* 15px */
+  line-height: 1.6;
+  color: var(--parchment-muted);
+  max-width: 68ch;
+}
+
+.site-footer__disclaimer + .site-footer__disclaimer { margin-top: var(--space-3); }
+
+/* ---------- 21. Reduced motion (§6.3) — must stay last ------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
