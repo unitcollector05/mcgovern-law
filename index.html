@@ -93,12 +93,28 @@
     <div class="container">
       <div class="hero__grid">
 
-        <!-- Hero eyebrow deleted 2026-09-20: it repeated the name and title
-             already in the sticky header 20px above it. Section eyebrows
-             elsewhere on the page are unaffected. -->
+        <!-- Hero copy is VIEWPORT-DEPENDENT â€” see COPY.md Â§2 and DESIGN.md
+             Â§5.1c. ONE element per item; the desktop-only clauses live in
+             inner spans carrying .u-wide-only, which is display:none below
+             960px. Do NOT duplicate the block to switch copy: there must be
+             exactly one <h1> in the DOM at every viewport, and display:none
+             keeps the hidden clause out of the accessibility tree as well
+             as out of layout.
+             Punctuation: the H1's full stop sits OUTSIDE the span so it is
+             correct in both states; the lead's separating space sits INSIDE
+             the span so mobile gets no leading space. -->
         <div class="hero__copy">
-          <h1 class="hero__title" id="hero-title">Estate planning and real estate closings.</h1>
-          <p class="hero__lead">One attorney, start to finish. You will always know who is handling your matter, because it is me.</p>
+          <!-- A <div>, not a <p>, deliberately. The harness's
+               C2-contrast-body-paragraph samples `main p, section p, p`,
+               which is resolved by DOM position and ignores visibility â€” as
+               a <p> this would be the first match at every width, so below
+               960px the check would have measured a display:none element.
+               An eyebrow is a label, not a paragraph, so <div> is also the
+               better semantics. First <p> is now .hero__lead at both
+               viewports: a real, visible body paragraph. -->
+          <div class="eyebrow hero__eyebrow u-wide-only u-wide-only--block">Thomas M. McGovern &middot; Attorney-at-Law</div>
+          <h1 class="hero__title" id="hero-title">Estate planning and real estate closings<span class="u-wide-only"> for Long Island and New York City families</span>.</h1>
+          <p class="hero__lead"><span class="u-wide-only">Wills, trusts, probate, administration, home closings, and deed transfers. </span>One attorney, start to finish. You will always know who is handling your matter, because it is me.</p>
         </div>
 
         <figure class="hero__figure portrait-plate">

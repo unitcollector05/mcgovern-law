@@ -259,6 +259,18 @@ p + p { margin-top: var(--space-4); }
   border: 0;
 }
 
+/* Desktop-only copy (§5.1c). `display: none` deliberately — not visibility
+   or opacity — so the hidden clause is out of layout AND out of the
+   accessibility tree, and screen readers below 960px never announce it.
+   Paired with a single element per copy item, so the page always has
+   exactly one <h1> and no duplicated blocks to keep in sync. */
+.u-wide-only { display: none; }
+
+@media (min-width: 960px) {
+  .u-wide-only          { display: inline; }  /* inner clause spans */
+  .u-wide-only--block   { display: block; }   /* block-level users */
+}
+
 .no-wrap { white-space: nowrap; }
 
 .text-center { text-align: center; }
@@ -649,9 +661,11 @@ p + p { margin-top: var(--space-4); }
    measures ~2.3:1 on parchment. DO NOT reach for --brass either — it is
    non-text only, 3.31:1 (DESIGN.md §2.2, the highest-risk error on this
    palette). */
-/* .hero__eyebrow was removed from the markup on 2026-09-20 — it duplicated
-   the name and title in the sticky header. Its rule is deleted with it;
-   .eyebrow itself is untouched and still used by every section label. */
+/* Restored 2026-09-20 as DESKTOP-ONLY (.u-wide-only). It duplicates the
+   sticky header's name and credential, which is why it was cut — but that
+   was a mobile fold-space problem, and the two-column desktop hero has the
+   room. It never renders below 960px. */
+.hero__eyebrow { margin-bottom: var(--space-3); }
 
 .hero__lead {
   font-size: 1.25rem;     /* 20px */
