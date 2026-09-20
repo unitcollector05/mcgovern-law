@@ -1194,6 +1194,35 @@ p + p { margin-top: var(--space-4); }
 
 .form__actions { display: block; }
 
+/* Live region for the Web3Forms result. EMPTY in the markup — script.js is
+   the only thing that ever writes here. Default (success) is --forest
+   9.23:1 on --parchment-deep; pending --ink-muted 6.69:1; error --oxblood
+   9.71:1. No colour-only signalling: each state carries its own words. */
+.form__status {
+  font-size: 1.0625rem;   /* 17px */
+  line-height: 1.6;
+  color: var(--forest);
+  overflow-wrap: break-word;   /* long detail strings must wrap, not overflow */
+}
+
+.form__status:empty { display: none; }
+.form__status.is-pending { color: var(--ink-muted); }
+.form__status.is-error { color: var(--oxblood); }
+
+.form__status a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+/* Disabled submit: still AA (--ink-muted 6.69:1 on --parchment-deep) and
+   still 48px. No opacity — that would break the contrast maths (§2.5). */
+.btn:disabled {
+  color: var(--ink-muted);
+  border-color: var(--border-strong);
+  cursor: progress;
+}
+
 .form__consent {
   font-size: 0.9375rem;   /* 15px */
   line-height: 1.6;
