@@ -1199,6 +1199,11 @@ p + p { margin-top: var(--space-4); }
    9.23:1 on --parchment-deep; pending --ink-muted 6.69:1; error --oxblood
    9.71:1. No colour-only signalling: each state carries its own words. */
 .form__status {
+  display: flex;               /* bare text becomes an anonymous flex item, so
+                                  the fallback anchor gets its own line */
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
   font-size: 1.0625rem;   /* 17px */
   line-height: 1.6;
   color: var(--forest);
@@ -1209,7 +1214,13 @@ p + p { margin-top: var(--space-4); }
 .form__status.is-pending { color: var(--ink-muted); }
 .form__status.is-error { color: var(--oxblood); }
 
+/* The mailto: fallback. It is a link the visitor CHOOSES — the page never
+   navigates to mailto: on its own (§7.2). Full 44px tap target because it
+   is a real interactive element inside the live region. */
 .form__status a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: inherit;
   text-decoration: underline;
   text-underline-offset: 0.18em;

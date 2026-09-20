@@ -83,7 +83,8 @@
     }
     statusEl.appendChild(document.createTextNode(text));
     if (link) {
-      statusEl.appendChild(document.createTextNode(' '));
+      /* .form__status is a flex column, so the anchor lands on its own line
+         and can carry a real 44px tap target without disrupting the prose. */
       var anchor = document.createElement('a');
       anchor.href = link.href;
       anchor.textContent = link.text;
@@ -112,18 +113,17 @@
     setBusy(false);
     setStatus('is-error',
       'That did not go through' + (detail ? ' (' + detail + ')' : '') +
-      '. Your email app should be opening with the message ready to send. ' +
-      'If nothing happens, call me at ' + PHONE + ' or email me at ' +
-      MAILBOX + '.',
-      { href: mailtoHref(), text: 'Open it in your email app.' });
+      '. Nothing has been sent. Call me at ' + PHONE + ', email me at ' +
+      MAILBOX + ', or use the link below \u2014 your message is still in the ' +
+      'form, so nothing is lost.',
+      { href: mailtoHref(), text: 'Open this in your email app instead' });
 
-    /* The original pre-backend behaviour, kept as the fallback path. */
-    try {
-      window.location.href = mailtoHref();
-    } catch (err) {
-      /* No mail handler configured. The message above already names the
-         phone number and the address, so the visitor is not stranded. */
-    }
+    /* NOTE: this function deliberately does NOT navigate anywhere.
+       It used to do `window.location.href = mailtoHref()`, which launched
+       Outlook / Mail unprompted and threw the visitor out of the browser
+       mid-task. The composed mailto: is now only ever the href of the
+       anchor above, which the visitor may click or ignore.
+       DO NOT reintroduce a programmatic mailto: navigation. */
   }
 
   form.addEventListener('submit', function (event) {

@@ -54,7 +54,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;display=swap">
-<link rel="stylesheet" href="styles.css">
+<!-- ?v= is a manual cache buster. GitHub Pages serves assets with
+     cache-control: max-age=600, and a returning visitor who gets new HTML
+     with cached old CSS/JS is worse off than one who gets neither.
+     BUMP THIS INTEGER whenever styles.css or script.js changes. -->
+<link rel="stylesheet" href="styles.css?v=2">
 </head>
 <body class="page" id="top">
 
@@ -563,7 +567,7 @@
   </a>
 </div>
 
-<script src="script.js"></script>
+<script src="script.js?v=2" defer></script>
 </body>
 </html>
 
