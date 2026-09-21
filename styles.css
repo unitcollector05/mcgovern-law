@@ -1039,55 +1039,75 @@ p + p { margin-top: var(--space-4); }
 
 /* ---------- 16a. Reviews (§5.10a) --------------------------------------- */
 
-/* Parchment section: it sits between .process (tinted) and .faq, and two
-   tinted sections may never be adjacent (§4.6). The rating block gets a
-   --mat card instead, so the social proof still has presence. */
+/* TINTED section (moved 2026-09-21 to sit right after .direct-access, and
+   tinted so the social proof lifts off the parchment field).
+   §4.6 forbids two tinted sections in a row, so .practice-areas — which
+   follows it — gave up its tint. New alternation is recorded in §4.6. */
 
+/* The plate. Navy outer rule + 6px gap + brass inner rule on a --mat mat,
+   the same construction as .portrait-plate. NO shadow: §4.5 permits exactly
+   one on the page and the portrait has it. */
 .reviews__rating {
+  max-width: 420px;
+  margin-inline: auto;
   background-color: var(--mat);
-  border: 1px solid var(--border-decorative);
-  border-top: 3px solid var(--brass);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--navy);
+  border-radius: var(--radius-sm);
+  padding: 6px;
+}
+
+.reviews__rating-frame {
+  border: 1px solid var(--brass);
   padding: var(--space-5) var(--space-4);
   text-align: center;
 }
 
 .reviews__score {
   font-family: var(--font-display);
-  font-size: 1.25rem;     /* 20px — the "out of 5.0" tail */
+  font-size: 1.375rem;    /* 22px — the "out of 5.0" tail */
   line-height: 1.1;
-  color: var(--ink);
+  color: var(--ink);      /* 17.36:1 on --mat */
 }
 
-/* The single most persuasive fact on the page. */
+/* The single most persuasive fact on the page, so it is the largest number
+   on it — larger than the 48px hero H1. */
 .reviews__score-value {
-  font-size: 3rem;        /* 48px */
+  display: block;
+  font-size: 4.5rem;      /* 72px */
   font-weight: 700;
+  line-height: 1;
   color: var(--navy);     /* 15.62:1 on --mat */
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
 }
 
 .reviews__stars {
   display: flex;
   justify-content: center;
-  gap: var(--space-1);
-  margin-top: var(--space-3);
+  gap: var(--space-2);
+  margin-top: var(--space-4);
 }
 
-/* Third SVG glyph on the page, permitted as an explicit amendment to §5.7.
-   aria-hidden via the wrapper — the numeral carries the meaning. */
+/* Third SVG glyph on the page, an explicit amendment to §5.7's two-icon
+   limit. Brass as a hairline-scale accent, not a large fill. aria-hidden on
+   the wrapper — the numeral carries the meaning. */
 .reviews__star {
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   fill: var(--brass);
   stroke: none;
   flex-shrink: 0;
 }
 
 .reviews__count {
-  margin-top: var(--space-3);
-  font-size: 1.0625rem;   /* 17px */
-  color: var(--ink);
+  margin-top: var(--space-4);
+  font-size: 1.25rem;     /* 20px */
+  font-weight: 700;
+  color: var(--ink);      /* 17.36:1 on --mat */
+}
+
+@media (min-width: 960px) {
+  .reviews__score-value { font-size: 5.5rem; }   /* 88px */
+  .reviews__star { width: 32px; height: 32px; }
 }
 
 .reviews__list {

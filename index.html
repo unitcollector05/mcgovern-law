@@ -58,7 +58,7 @@
      cache-control: max-age=600, and a returning visitor who gets new HTML
      with cached old CSS/JS is worse off than one who gets neither.
      BUMP THIS INTEGER whenever styles.css or script.js changes. -->
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body class="page" id="top">
 
@@ -174,8 +174,75 @@
     </div>
   </section>
 
+  <!-- ==================== REVIEWS =================== -->
+  <!-- Placed between process and faq deliberately: social proof belongs
+       where the visitor is deciding. The run-up reads
+       what happens when you call -> what happened for other people ->
+       questions -> contact.
+       Excerpts are VERBATIM CONTIGUOUS spans of the Avvo source, chosen so
+       that none contains "we", "our" or "us" â€” client reviews are written
+       in the plural and R2-no-plural-voice bans those page-wide. Only
+       typographic quotation marks have been added around them.
+       Source: avvo.com/attorneys/11566-ny-thomas-mcgovern-1226845.html
+       verified 2026-09-20. See COPY.md for the full source text. -->
+  <section class="section section--tint reviews" id="reviews" aria-labelledby="reviews-title">
+    <div class="container">
+      <div class="section__head text-center">
+        <p class="eyebrow">Reviews</p>
+        <h2 id="reviews-title">What Clients Say</h2>
+      </div>
+
+      <!-- Framed like .portrait-plate: navy outer rule, 6px gap, brass inner
+           rule on a --mat mat. Reads as a mounted credential, not a
+           paragraph. Permitted device #2 (the thin double rule). -->
+      <div class="reviews__rating">
+       <div class="reviews__rating-frame">
+        <p class="reviews__score"><span class="reviews__score-value">5.0</span> out of 5.0</p>
+        <div class="reviews__stars" aria-hidden="true">
+          <svg class="reviews__star" viewBox="0 0 24 24" focusable="false"><path d="M12 2.4l2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg>
+          <svg class="reviews__star" viewBox="0 0 24 24" focusable="false"><path d="M12 2.4l2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg>
+          <svg class="reviews__star" viewBox="0 0 24 24" focusable="false"><path d="M12 2.4l2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg>
+          <svg class="reviews__star" viewBox="0 0 24 24" focusable="false"><path d="M12 2.4l2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg>
+          <svg class="reviews__star" viewBox="0 0 24 24" focusable="false"><path d="M12 2.4l2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg>
+        </div>
+        <p class="reviews__count">51 client reviews on Avvo</p>
+       </div>
+      </div>
+
+      <ul class="reviews__list">
+        <li class="review">
+          <blockquote class="review__quote">
+            <p>&ldquo;On closing day, there is no one else better to have with you. Tom is calm, friendly, and trustworthy. Without hesitation, I would highly recommend choosing him as your attorney.&rdquo;</p>
+          </blockquote>
+          <p class="review__attribution">Kevin &mdash; home purchase, January 2026</p>
+        </li>
+        <li class="review">
+          <blockquote class="review__quote">
+            <p>&ldquo;Tom has helped my parents and myself with estate planning. He was amazing helping my parents, patiently answering all their questions and making them feel at ease.&rdquo;</p>
+          </blockquote>
+          <p class="review__attribution">Joseph &mdash; estate planning, July 2022</p>
+        </li>
+        <li class="review">
+          <blockquote class="review__quote">
+            <p>&ldquo;He is friendly, professional, and truly knows his stuff. Whether you&rsquo;re a first-time buyer or purchasing or selling another home, Tom is the one to call.&rdquo;</p>
+          </blockquote>
+          <p class="review__attribution">Stephanie &mdash; first home purchase, January 2026</p>
+        </li>
+      </ul>
+
+      <p class="reviews__more">
+        <a class="reviews__link" href="https://www.avvo.com/attorneys/11566-ny-thomas-mcgovern-1226845.html" target="_blank" rel="noopener noreferrer">Read all 51 reviews on Avvo<span class="visually-hidden"> (opens in a new tab)</span></a>
+      </p>
+
+      <p class="reviews__disclaimer">Reviews are from Avvo. Prior results do not guarantee a similar outcome.</p>
+    </div>
+  </section>
+
   <!-- ================ PRACTICE AREAS ================ -->
-  <section class="section section--tint practice" id="practice-areas" aria-labelledby="practice-areas-title">
+  <!-- Untinted since 2026-09-21: #reviews immediately above is now tinted,
+       and Â§4.6 forbids two tinted sections in a row. The --mat practice
+       cards carry their own definition, so they read fine on parchment. -->
+  <section class="section practice" id="practice-areas" aria-labelledby="practice-areas-title">
     <div class="container">
       <div class="section__head text-center">
         <p class="eyebrow">Practice areas</p>
@@ -325,65 +392,6 @@
           </div>
         </li>
       </ol>
-    </div>
-  </section>
-
-  <!-- ==================== REVIEWS =================== -->
-  <!-- Placed between process and faq deliberately: social proof belongs
-       where the visitor is deciding. The run-up reads
-       what happens when you call -> what happened for other people ->
-       questions -> contact.
-       Excerpts are VERBATIM CONTIGUOUS spans of the Avvo source, chosen so
-       that none contains "we", "our" or "us" â€” client reviews are written
-       in the plural and R2-no-plural-voice bans those page-wide. Only
-       typographic quotation marks have been added around them.
-       Source: avvo.com/attorneys/11566-ny-thomas-mcgovern-1226845.html
-       verified 2026-09-20. See COPY.md for the full source text. -->
-  <section class="section reviews" id="reviews" aria-labelledby="reviews-title">
-    <div class="container">
-      <div class="section__head text-center">
-        <p class="eyebrow">Reviews</p>
-        <h2 id="reviews-title">What Clients Say</h2>
-      </div>
-
-      <div class="reviews__rating">
-        <p class="reviews__score"><span class="reviews__score-value">5.0</span> out of 5.0</p>
-        <div class="reviews__stars" aria-hidden="true">
-          <svg class="reviews__star" viewBox="0 0 24 24" focusable="false"><path d="M12 2.4l2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg>
-          <svg class="reviews__star" viewBox="0 0 24 24" focusable="false"><path d="M12 2.4l2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg>
-          <svg class="reviews__star" viewBox="0 0 24 24" focusable="false"><path d="M12 2.4l2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg>
-          <svg class="reviews__star" viewBox="0 0 24 24" focusable="false"><path d="M12 2.4l2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg>
-          <svg class="reviews__star" viewBox="0 0 24 24" focusable="false"><path d="M12 2.4l2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg>
-        </div>
-        <p class="reviews__count">51 client reviews on Avvo</p>
-      </div>
-
-      <ul class="reviews__list">
-        <li class="review">
-          <blockquote class="review__quote">
-            <p>&ldquo;On closing day, there is no one else better to have with you. Tom is calm, friendly, and trustworthy. Without hesitation, I would highly recommend choosing him as your attorney.&rdquo;</p>
-          </blockquote>
-          <p class="review__attribution">Kevin &mdash; home purchase, January 2026</p>
-        </li>
-        <li class="review">
-          <blockquote class="review__quote">
-            <p>&ldquo;Tom has helped my parents and myself with estate planning. He was amazing helping my parents, patiently answering all their questions and making them feel at ease.&rdquo;</p>
-          </blockquote>
-          <p class="review__attribution">Joseph &mdash; estate planning, July 2022</p>
-        </li>
-        <li class="review">
-          <blockquote class="review__quote">
-            <p>&ldquo;He is friendly, professional, and truly knows his stuff. Whether you&rsquo;re a first-time buyer or purchasing or selling another home, Tom is the one to call.&rdquo;</p>
-          </blockquote>
-          <p class="review__attribution">Stephanie &mdash; first home purchase, January 2026</p>
-        </li>
-      </ul>
-
-      <p class="reviews__more">
-        <a class="reviews__link" href="https://www.avvo.com/attorneys/11566-ny-thomas-mcgovern-1226845.html" target="_blank" rel="noopener noreferrer">Read all 51 reviews on Avvo<span class="visually-hidden"> (opens in a new tab)</span></a>
-      </p>
-
-      <p class="reviews__disclaimer">Reviews are from Avvo. Prior results do not guarantee a similar outcome.</p>
     </div>
   </section>
 
@@ -660,7 +668,7 @@
   </div>
 </dialog>
 
-<script src="script.js?v=5" defer></script>
+<script src="script.js?v=6" defer></script>
 </body>
 </html>
 
