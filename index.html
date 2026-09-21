@@ -58,7 +58,7 @@
      cache-control: max-age=600, and a returning visitor who gets new HTML
      with cached old CSS/JS is worse off than one who gets neither.
      BUMP THIS INTEGER whenever styles.css or script.js changes. -->
-<link rel="stylesheet" href="styles.css?v=6">
+<link rel="stylesheet" href="styles.css?v=7">
 </head>
 <body class="page" id="top">
 
@@ -141,7 +141,7 @@
 
         <!-- Carries "Long Island", which the shortened H1 no longer does.
              Deliberately NOT .no-wrap â€” it must wrap freely at 320px. -->
-        <p class="hero__trust">Serving Long Island &mdash; Nassau and Suffolk Counties &mdash; and all five boroughs.</p>
+        <p class="hero__trust">Serving Long Island and New York City.</p>
 
         <div class="hero__actions">
           <a class="btn btn--primary btn--block" href="tel:+15167272531">
@@ -167,7 +167,10 @@
         <h2 id="direct-access-title">When you call, you get me.</h2>
       </div>
       <div class="container--prose stack stack--loose">
-        <p>No receptionist. No paralegal. No case manager. No phone tree asking you to press one for estates and two for real estate.</p>
+        <!-- The page's core promise, promoted to a typographic statement.
+             This is the EXISTING first paragraph restyled, not a new or
+             duplicated sentence. -->
+        <p class="statement">No receptionist. No paralegal. No case manager. No phone tree asking you to press one for estates and two for real estate.</p>
         <p>Your call comes to the attorney whose face is on this page, and that same attorney handles your matter from the first question to the last signature. Nothing gets passed down a chain. Nothing gets explained to you secondhand.</p>
         <p>That is the whole reason I practice the way I do. Legal problems are stressful enough without wondering who actually has your file, or whether the person on the phone has read it. You will know my voice. You will have my cell number. And when something changes, you can reach me about it the same day.</p>
       </div>
@@ -254,7 +257,16 @@
 
         <article class="practice-card practice-card--estate">
           <p class="eyebrow practice-card__eyebrow">Practice area</p>
-          <h3 class="practice-card__title">Estate Planning</h3>
+          <div class="practice-card__head">
+            <!-- Hand-drawn line art: a folded document with ruled lines.
+                 Not from any icon library. No gavel, no scales (Â§8.1). -->
+            <svg class="practice-card__icon" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+              <path d="M11 4.5h11.5L29 11v24.5H11z"/>
+              <path d="M22.5 4.5V11H29"/>
+              <path d="M15.5 18.5h9M15.5 24h9M15.5 29.5h6"/>
+            </svg>
+            <h3 class="practice-card__title">Estate Planning</h3>
+          </div>
           <!-- Service list stays ABOVE the disclosure and is never collapsed:
                it is the at-a-glance answer to "does he do my thing".
                Only the explanatory prose is collapsible. DESIGN.md Â§5.8a. -->
@@ -281,7 +293,15 @@
 
         <article class="practice-card practice-card--realestate">
           <p class="eyebrow practice-card__eyebrow">Practice area</p>
-          <h3 class="practice-card__title">Real Estate Transactions</h3>
+          <div class="practice-card__head">
+            <!-- Hand-drawn line art: a plain house elevation. -->
+            <svg class="practice-card__icon" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+              <path d="M6 20 20 8.5 34 20"/>
+              <path d="M10 17.5V34h20V17.5"/>
+              <path d="M17 34v-9.5h6V34"/>
+            </svg>
+            <h3 class="practice-card__title">Real Estate Transactions</h3>
+          </div>
           <ul class="practice-card__items">
             <li class="practice-card__item">Closings</li>
             <li class="practice-card__item">Deed Transfers</li>
@@ -320,7 +340,14 @@
       <div class="story__body container--prose stack stack--loose">
         <p>I started at NYNEX, now Verizon, in 1996, and became a proud union member of the CWA that same year. Good work, good people.</p>
         <p>Then I found out the company would pay for law school. I started going part-time at night in the summer of 2002.</p>
-        <p>What followed was four and a half years of a juggling act: full-time work during the day, law school at night, and two daughters whose t-ball teams I was coaching, because I was not going to be the dad who disappeared for four years. For about a four-year stretch I slept roughly four hours a night. It was exhausting in a way that is hard to describe, and I would not trade it.</p>
+          <p>What followed was four and a half years of a juggling act: full-time work during the day, law school at night, and two daughters whose t-ball teams I was coaching, because I was not going to be the dad who disappeared for four years. It was exhausting in a way that is hard to describe, and I would not trade it.</p>
+
+          <!-- Pulled out of the paragraph above, NOT duplicated â€” the
+               sentence was removed from the running prose so the reader
+               never meets it twice. -->
+          <blockquote class="pullquote">
+            <p>For about a four-year stretch I slept roughly four hours a night.</p>
+          </blockquote>
         <p>When it came time for the bar exam, I did not want to sit for it twice. I took a three-month leave of absence from Verizon and studied like it was a job. In February 2007 I passed both the New York and the Connecticut bar exams, on the first try.</p>
         <p class="story__coda">I tell you this for one reason. I did not come to the law from a comfortable place, and I have not forgotten what it feels like to be the person on the other side of the desk with a lot riding on it. That is why I answer my own phone, and why I will stay on a problem until it is actually solved.</p>
       </div>
@@ -424,7 +451,7 @@
             <span class="faq-item__indicator" aria-hidden="true"></span>
           </summary>
           <div class="faq-item__a stack">
-            <p>Surrogate&rsquo;s Court is the New York court that handles estates. Every county has one, including each of the five boroughs, Nassau, and Suffolk.</p>
+            <p>Surrogate&rsquo;s Court is the New York court that handles estates. Every county has one, across Long Island and New York City alike.</p>
             <p>It is where a will is filed and approved, where an executor or administrator is officially appointed, and where disputes over an estate get resolved. It is a quieter, more paperwork-driven court than most people picture. In the great majority of estates nobody ends up arguing in front of a judge at all.</p>
             <p>The case is filed in the county where your loved one lived, and I handle the filings and the correspondence so the family is not chasing forms.</p>
           </div>
@@ -524,7 +551,7 @@
             </a>
           </div>
 
-          <p class="contact__areas">Serving Nassau County, Suffolk County, and all five boroughs.</p>
+          <p class="contact__areas">Serving Long Island and New York City.</p>
 
         </div>
 
@@ -629,7 +656,7 @@
           <svg class="icon icon--mail" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="m22 6-10 7L2 6"/></svg>
           <span class="no-wrap">TMLaw714@aol.com</span>
         </a>
-        <p>Serving Nassau County, Suffolk County, and all five boroughs.</p>
+        <p>Serving Long Island and New York City.</p>
       </div>
 
       <p class="site-footer__disclaimer">Attorney Advertising. Prior results do not guarantee a similar outcome.</p>
@@ -668,7 +695,7 @@
   </div>
 </dialog>
 
-<script src="script.js?v=6" defer></script>
+<script src="script.js?v=7" defer></script>
 </body>
 </html>
 
