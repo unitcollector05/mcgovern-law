@@ -816,6 +816,10 @@ p + p { margin-top: var(--space-4); }
   }
 }
 
+/* The >=960px "always expanded" override lives at the END of this section,
+   after .practice-card__summary is defined — otherwise the base rule, at
+   equal specificity but later in the file, silently wins. */
+
 .practice-card {
   background-color: var(--mat);
   border: 1px solid var(--border-decorative);
@@ -836,7 +840,72 @@ p + p { margin-top: var(--space-4); }
 .practice-card__items {
   list-style: none;
   padding: 0;
+  margin-top: var(--space-4);
+}
+
+/* --- Collapsible prose (§5.8a) -----------------------------------------
+   Mobile only. The practice NAME and the SERVICE LIST are outside this and
+   never collapse — only the explanatory paragraphs. Same native
+   <details>/<summary> component as the FAQ, no JS, no ARIA roles. */
+
+.practice-card__more {
   margin-top: var(--space-5);
+  border-top: 1px solid var(--border-decorative);
+}
+
+.practice-card__summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 48px;
+  padding: var(--space-3) 0;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;   /* 17px */
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--navy);     /* 15.62:1 on the white card */
+  transition: color 120ms var(--ease);
+}
+
+.practice-card__summary::-webkit-details-marker { display: none; }
+.practice-card__summary::marker { content: ""; }
+.practice-card__summary:hover { color: var(--oxblood); }
+
+.practice-card__more[open] .faq-item__indicator::after { transform: scaleY(0); }
+
+.practice-card__more .practice-card__body {
+  padding-top: var(--space-4);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 180ms var(--ease), transform 180ms var(--ease);
+}
+
+.practice-card__more[open] .practice-card__body {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Desktop (>=960px) renders every card expanded.
+   The CSS-only route was built first and PROVED to work — forcing
+   `> *:not(summary){display:block}` plus
+   `::details-content{content-visibility:visible}` did render the prose at
+   1440px. It was abandoned anyway, for two reasons:
+     1. Hiding .practice-card__summary at desktop broke
+        R6-faq-keyboard-toggle, which presses Enter on the FIRST <details>
+        on the page — now a practice card, since practice-areas precedes
+        faq in the DOM. A display:none summary cannot be pressed.
+     2. Keeping the summary visible while CSS forces the content open makes
+        it an INERT control: it toggles `open`, but nothing moves. A visible
+        control that does nothing is worse than a visible control.
+   So desktop opens the disclosures for real, via `open` set once on load in
+   script.js. The summary stays visible and genuinely functional. See
+   DESIGN.md §5.8a. */
+@media (min-width: 960px) {
+  .practice-card__more { border-top: 0; }
+  .practice-card__more .practice-card__body { padding-top: 0; }
 }
 
 .practice-card__item {
@@ -966,6 +1035,121 @@ p + p { margin-top: var(--space-4); }
 @media (min-width: 960px) {
   .process__list { grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
   .process-step { flex-direction: column; gap: var(--space-4); }
+}
+
+/* ---------- 16a. Reviews (§5.10a) --------------------------------------- */
+
+/* Parchment section: it sits between .process (tinted) and .faq, and two
+   tinted sections may never be adjacent (§4.6). The rating block gets a
+   --mat card instead, so the social proof still has presence. */
+
+.reviews__rating {
+  background-color: var(--mat);
+  border: 1px solid var(--border-decorative);
+  border-top: 3px solid var(--brass);
+  border-radius: var(--radius-md);
+  padding: var(--space-5) var(--space-4);
+  text-align: center;
+}
+
+.reviews__score {
+  font-family: var(--font-display);
+  font-size: 1.25rem;     /* 20px — the "out of 5.0" tail */
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+/* The single most persuasive fact on the page. */
+.reviews__score-value {
+  font-size: 3rem;        /* 48px */
+  font-weight: 700;
+  color: var(--navy);     /* 15.62:1 on --mat */
+  letter-spacing: -0.015em;
+}
+
+.reviews__stars {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-1);
+  margin-top: var(--space-3);
+}
+
+/* Third SVG glyph on the page, permitted as an explicit amendment to §5.7.
+   aria-hidden via the wrapper — the numeral carries the meaning. */
+.reviews__star {
+  width: 22px;
+  height: 22px;
+  fill: var(--brass);
+  stroke: none;
+  flex-shrink: 0;
+}
+
+.reviews__count {
+  margin-top: var(--space-3);
+  font-size: 1.0625rem;   /* 17px */
+  color: var(--ink);
+}
+
+.reviews__list {
+  list-style: none;
+  padding: 0;
+  margin-top: var(--space-6);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+/* Brass left hairline — the same device as .diff__item and .story__coda,
+   rather than a new ornament. */
+.review {
+  padding-left: var(--space-5);
+  border-left: 1px solid var(--brass);
+}
+
+.review__quote {
+  margin: 0;
+  font-size: 1.125rem;    /* 18px */
+  line-height: 1.6;
+  color: var(--ink);      /* 16.12:1 */
+}
+
+.review__attribution {
+  margin-top: var(--space-2);
+  font-size: 0.9375rem;   /* 15px */
+  color: var(--ink-muted); /* 7.30:1 */
+}
+
+.reviews__more {
+  margin-top: var(--space-6);
+  text-align: center;
+}
+
+.reviews__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 1.0625rem;   /* 17px */
+  font-weight: 700;
+  color: var(--navy);     /* 14.50:1 */
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.reviews__link:hover { color: var(--oxblood); text-decoration-thickness: 2px; }
+
+/* NY attorney-advertising disclaimer, proximate to the reviews themselves
+   rather than only in the footer. 15px --ink-muted = 7.30:1, above the
+   15px fine-print floor (§3.3). */
+.reviews__disclaimer {
+  margin-top: var(--space-4);
+  font-size: 0.9375rem;   /* 15px */
+  line-height: 1.6;
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .reviews__list { grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
 }
 
 /* ---------- 17. FAQ (§5.11) --------------------------------------------- */

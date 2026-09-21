@@ -27,7 +27,25 @@
     yearSlot.textContent = String(new Date().getFullYear());
   }
 
-  /* ---- 2. Consultation form -------------------------------------------- */
+  /* ---- 2. Practice-area disclosures: expanded on desktop ---------------
+
+     Mobile keeps them collapsed (pure HTML — no script needed, so the
+     scroll-length win survives with JS off). At >=960px there is room for
+     everything, so they are opened ONCE on load.
+
+     Deliberately no resize listener: after first paint the open/closed
+     state belongs to the visitor, and reasserting it on every resize would
+     re-open panels they just closed. */
+
+  var wide = window.matchMedia && window.matchMedia('(min-width: 960px)');
+  if (wide && wide.matches) {
+    var panels = document.querySelectorAll('.practice-card__more');
+    for (var i = 0; i < panels.length; i += 1) {
+      panels[i].open = true;
+    }
+  }
+
+  /* ---- 3. Consultation form -------------------------------------------- */
 
   var form = document.getElementById('consult-form');
   if (!form) {

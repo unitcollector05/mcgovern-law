@@ -58,7 +58,7 @@
      cache-control: max-age=600, and a returning visitor who gets new HTML
      with cached old CSS/JS is worse off than one who gets neither.
      BUMP THIS INTEGER whenever styles.css or script.js changes. -->
-<link rel="stylesheet" href="styles.css?v=3">
+<link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body class="page" id="top">
 
@@ -188,34 +188,49 @@
         <article class="practice-card practice-card--estate">
           <p class="eyebrow practice-card__eyebrow">Practice area</p>
           <h3 class="practice-card__title">Estate Planning</h3>
-          <div class="practice-card__body stack">
-            <p>Estate planning is simply putting your wishes in writing, in documents the law will honor, so the people you love are not left guessing.</p>
-            <p>I knew in law school that this is where I wanted to spend my career, and the reason is simple. Having your affairs in order is a gift in both directions. It gives you the calm of knowing it is settled. It gives your beneficiaries, your heirs, and everyone you leave behind a clear map instead of a pile of questions.</p>
-            <p>Here is the part most people do not know. If you have no documents, New York State law decides who receives what. Not you. The state applies a fixed formula, and that formula has no idea who took care of you, who you promised something to, or what you actually wanted.</p>
-            <p>Complete, properly drafted paperwork takes the guesswork out of your final wishes. It cuts down on delay, indecision, and the kind of family arguments that start over how assets get divided and never really end. I also advise on protecting assets from creditors, and on protecting them from the state or county if you or someone you love ever needs state assistance.</p>
-            <p>The goal is a documented plan, written down and ready, so the transfer of what you own is smooth and seamless for the people who come next.</p>
-          </div>
+          <!-- Service list stays ABOVE the disclosure and is never collapsed:
+               it is the at-a-glance answer to "does he do my thing".
+               Only the explanatory prose is collapsible. DESIGN.md Â§5.8a. -->
           <ul class="practice-card__items">
             <li class="practice-card__item">Estate Planning</li>
             <li class="practice-card__item">Probate</li>
             <li class="practice-card__item">Administration</li>
           </ul>
+          <details class="practice-card__more">
+            <summary class="practice-card__summary">
+              What estate planning involves
+              <span class="faq-item__indicator" aria-hidden="true"></span>
+            </summary>
+            <div class="practice-card__body stack">
+              <p>Estate planning is simply putting your wishes in writing, in documents the law will honor, so the people you love are not left guessing.</p>
+              <p>I knew in law school that this is where I wanted to spend my career, and the reason is simple. Having your affairs in order is a gift in both directions. It gives you the calm of knowing it is settled. It gives your beneficiaries, your heirs, and everyone you leave behind a clear map instead of a pile of questions.</p>
+              <p>Here is the part most people do not know. If you have no documents, New York State law decides who receives what. Not you. The state applies a fixed formula, and that formula has no idea who took care of you, who you promised something to, or what you actually wanted.</p>
+              <p>Complete, properly drafted paperwork takes the guesswork out of your final wishes. It cuts down on delay, indecision, and the kind of family arguments that start over how assets get divided and never really end. I also advise on protecting assets from creditors, and on protecting them from the state or county if you or someone you love ever needs state assistance.</p>
+              <p>The goal is a documented plan, written down and ready, so the transfer of what you own is smooth and seamless for the people who come next.</p>
+            </div>
+          </details>
           <p class="practice-card__foot"><a href="#contact">Ask me about estate planning</a></p>
         </article>
 
         <article class="practice-card practice-card--realestate">
           <p class="eyebrow practice-card__eyebrow">Practice area</p>
           <h3 class="practice-card__title">Real Estate Transactions</h3>
-          <div class="practice-card__body stack">
-            <p>Almost everyone buys or sells some interest in real estate at some point. It is usually the largest transaction of a person&rsquo;s life, and it should not feel like a leap of faith.</p>
-            <p>There is also a direct line between this work and estate work. Very often, when someone passes, there is real property that has to be sold or transferred, and the family is handling that in the middle of an already hard season. That connection is exactly why these two areas go hand in hand for me. When one attorney handles both the estate and the sale of the house, nothing falls in the gap between two offices. You explain your situation once.</p>
-            <p>I have represented hundreds of buyers and sellers, both as part of estate administration and in ordinary purchases and sales.</p>
-            <p>I also handle deed transfers, where ownership of a house, condo, or co-op is transferred to family members, or into a trust to protect the asset. These are short documents with long consequences, and they are worth doing correctly the first time.</p>
-          </div>
           <ul class="practice-card__items">
             <li class="practice-card__item">Closings</li>
             <li class="practice-card__item">Deed Transfers</li>
           </ul>
+          <details class="practice-card__more">
+            <summary class="practice-card__summary">
+              What real estate work involves
+              <span class="faq-item__indicator" aria-hidden="true"></span>
+            </summary>
+            <div class="practice-card__body stack">
+              <p>Almost everyone buys or sells some interest in real estate at some point. It is usually the largest transaction of a person&rsquo;s life, and it should not feel like a leap of faith.</p>
+              <p>There is also a direct line between this work and estate work. Very often, when someone passes, there is real property that has to be sold or transferred, and the family is handling that in the middle of an already hard season. That connection is exactly why these two areas go hand in hand for me. When one attorney handles both the estate and the sale of the house, nothing falls in the gap between two offices. You explain your situation once.</p>
+              <p>I have represented hundreds of buyers and sellers, both as part of estate administration and in ordinary purchases and sales.</p>
+              <p>I also handle deed transfers, where ownership of a house, condo, or co-op is transferred to family members, or into a trust to protect the asset. These are short documents with long consequences, and they are worth doing correctly the first time.</p>
+            </div>
+          </details>
           <p class="practice-card__foot"><a href="#contact">Ask me about a closing or deed transfer</a></p>
         </article>
 
@@ -310,6 +325,65 @@
           </div>
         </li>
       </ol>
+    </div>
+  </section>
+
+  <!-- ==================== REVIEWS =================== -->
+  <!-- Placed between process and faq deliberately: social proof belongs
+       where the visitor is deciding. The run-up reads
+       what happens when you call -> what happened for other people ->
+       questions -> contact.
+       Excerpts are VERBATIM CONTIGUOUS spans of the Avvo source, chosen so
+       that none contains "we", "our" or "us" â€” client reviews are written
+       in the plural and R2-no-plural-voice bans those page-wide. Only
+       typographic quotation marks have been added around them.
+       Source: avvo.com/attorneys/11566-ny-thomas-mcgovern-1226845.html
+       verified 2026-09-20. See COPY.md for the full source text. -->
+  <section class="section reviews" id="reviews" aria-labelledby="reviews-title">
+    <div class="container">
+      <div class="section__head text-center">
+        <p class="eyebrow">Reviews</p>
+        <h2 id="reviews-title">What Clients Say</h2>
+      </div>
+
+      <div class="reviews__rating">
+        <p class="reviews__score"><span class="reviews__score-value">5.0</span> out of 5.0</p>
+        <div class="reviews__stars" aria-hidden="true">
+          <svg class="reviews__star" viewBox="0 0 24 24" focusable="false"><path d="M12 2.4l2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg>
+          <svg class="reviews__star" viewBox="0 0 24 24" focusable="false"><path d="M12 2.4l2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg>
+          <svg class="reviews__star" viewBox="0 0 24 24" focusable="false"><path d="M12 2.4l2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg>
+          <svg class="reviews__star" viewBox="0 0 24 24" focusable="false"><path d="M12 2.4l2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg>
+          <svg class="reviews__star" viewBox="0 0 24 24" focusable="false"><path d="M12 2.4l2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg>
+        </div>
+        <p class="reviews__count">51 client reviews on Avvo</p>
+      </div>
+
+      <ul class="reviews__list">
+        <li class="review">
+          <blockquote class="review__quote">
+            <p>&ldquo;On closing day, there is no one else better to have with you. Tom is calm, friendly, and trustworthy. Without hesitation, I would highly recommend choosing him as your attorney.&rdquo;</p>
+          </blockquote>
+          <p class="review__attribution">Kevin &mdash; home purchase, January 2026</p>
+        </li>
+        <li class="review">
+          <blockquote class="review__quote">
+            <p>&ldquo;Tom has helped my parents and myself with estate planning. He was amazing helping my parents, patiently answering all their questions and making them feel at ease.&rdquo;</p>
+          </blockquote>
+          <p class="review__attribution">Joseph &mdash; estate planning, July 2022</p>
+        </li>
+        <li class="review">
+          <blockquote class="review__quote">
+            <p>&ldquo;He is friendly, professional, and truly knows his stuff. Whether you&rsquo;re a first-time buyer or purchasing or selling another home, Tom is the one to call.&rdquo;</p>
+          </blockquote>
+          <p class="review__attribution">Stephanie &mdash; first home purchase, January 2026</p>
+        </li>
+      </ul>
+
+      <p class="reviews__more">
+        <a class="reviews__link" href="https://www.avvo.com/attorneys/11566-ny-thomas-mcgovern-1226845.html" target="_blank" rel="noopener noreferrer">Read all 51 reviews on Avvo<span class="visually-hidden"> (opens in a new tab)</span></a>
+      </p>
+
+      <p class="reviews__disclaimer">Reviews are from Avvo. Prior results do not guarantee a similar outcome.</p>
     </div>
   </section>
 
@@ -586,7 +660,7 @@
   </div>
 </dialog>
 
-<script src="script.js?v=3" defer></script>
+<script src="script.js?v=5" defer></script>
 </body>
 </html>
 
