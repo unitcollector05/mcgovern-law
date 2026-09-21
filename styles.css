@@ -274,40 +274,12 @@ p + p { margin-top: var(--space-4); }
   .u-wide-only--block   { display: block; }   /* block-level users */
 }
 
-/* Typographic emphasis blocks (§5.1d). Both carry EXISTING copy promoted
-   out of running prose — never new words, and never a sentence that also
-   still appears in the paragraphs around them. */
-
-/* A key claim set larger, in the display face. Used once, on the
-   direct-access promise. */
-.statement {
-  font-family: var(--font-display);
-  font-size: 1.375rem;    /* 22px */
-  line-height: 1.4;
-  font-weight: 700;
-  color: var(--navy);     /* 14.50:1 on parchment */
-}
-
-/* Pull-quote. Permitted device #2 (thin double rule) reduced to a single
-   brass hairline above and a decorative hairline below, so it frames
-   without boxing. Used once, in the story. */
-.pullquote {
-  margin: 0;
-  padding-block: var(--space-5);
-  border-top: 1px solid var(--brass);
-  border-bottom: 1px solid var(--border-decorative);
-  font-family: var(--font-display);
-  font-size: 1.5rem;      /* 24px */
-  line-height: 1.35;
-  font-weight: 700;
-  color: var(--navy);     /* 14.50:1 on parchment */
-  text-align: center;
-}
-
-@media (min-width: 960px) {
-  .statement { font-size: 1.625rem; }   /* 26px */
-  .pullquote { font-size: 1.875rem; }   /* 30px */
-}
+/* NOTE: .statement and .pullquote were removed 2026-09-20 at the client's
+   request — he wanted the direct-access section to rest on its heading alone
+   ("When you call, you get me.") and did not want the story pull-quote. The
+   sentence the pull-quote had lifted was returned to its paragraph. Both
+   rules were deleted rather than left orphaned. If a typographic emphasis
+   block is ever wanted again, DESIGN.md §5.1d still records the intent. */
 
 .no-wrap { white-space: nowrap; }
 
