@@ -1,4 +1,4 @@
-﻿/* Thomas M. McGovern, Attorney-at-Law
+/* Thomas M. McGovern, Attorney-at-Law
  *
  * This file does exactly two things:
  *   1. Stamps the current year into the footer copyright line.
@@ -16,7 +16,7 @@
 (function () {
   'use strict';
 
-  var MAILBOX = 'TMLaw@aol.com';
+  var MAILBOX = 'TMLaw714@aol.com';
   var PHONE = '(516) 727-2531';
   var ENDPOINT = 'https://api.web3forms.com/submit';
 
@@ -29,7 +29,7 @@
 
   /* ---- 2. Practice-area disclosures: expanded on desktop ---------------
 
-     Mobile keeps them collapsed (pure HTML â€” no script needed, so the
+     Mobile keeps them collapsed (pure HTML — no script needed, so the
      scroll-length win survives with JS off). At >=960px there is room for
      everything, so they are opened ONCE on load.
 
@@ -157,7 +157,7 @@
       '&body=' + encodeURIComponent(lines.join('\r\n'));
   }
 
-  /* Built from DOM nodes, never innerHTML â€” the text can carry
+  /* Built from DOM nodes, never innerHTML — the text can carry
      visitor-supplied values and this keeps them inert. */
   function setStatus(state, text, link) {
     if (!statusEl) {
@@ -250,7 +250,7 @@
         return;
       }
       /* Web3Forms puts 400 messages at json.body.message and 429 at
-         json.message. Read defensively â€” never assume the shape. */
+         json.message. Read defensively — never assume the shape. */
       var detail = '';
       if (result.json) {
         if (result.json.body && result.json.body.message) {
