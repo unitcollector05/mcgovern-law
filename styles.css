@@ -1233,7 +1233,17 @@ p + p { margin-top: var(--space-4); }
 }
 
 @media (min-width: 768px) {
-  .reviews__list { grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+  .reviews__list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+    /* Grid items stretch by default, so every column was the height of the
+       TALLEST quote while its text sat at the top. The shortest review left
+       169px of dead space beneath it, and because the brass hairline is a
+       border on the item it ran the full height and made the gap obvious.
+       Centring lets each rule hug its own quote and sit on a shared middle
+       line, so three very uneven quotes still read as a balanced row. */
+    align-items: center;
+  }
 }
 
 /* ---------- 17. FAQ (§5.11) --------------------------------------------- */
